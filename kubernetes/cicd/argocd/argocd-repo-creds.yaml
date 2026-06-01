@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitops-repo-creds
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository # 💡 ArgoCD에게 깃랩 저장소 전용 열쇠임을 알리는 라벨
+type: Opaque
+stringData:
+  url: "http://192.168.72.131/root/gitops-repo.git"
+  type: "git"
+  username: "root"
+  password: "glpat-8tkYUHGwMvPbohz0hJIQ4m86MQp1OjEH.01.0w0zkh7dl" # 🔑 실제 유효한 토큰 직접 기재

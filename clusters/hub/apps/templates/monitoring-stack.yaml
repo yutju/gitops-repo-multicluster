@@ -15,6 +15,12 @@ spec:
       values: |
         prometheus:
           enabled: true
+          #  엣지 클러스터의 데이터를 받기 위한 수신 모드 및 포트 개방
+          prometheusSpec:
+            enableRemoteWriteReceiver: true
+          service:
+            type: NodePort
+            nodePort: 30090
         grafana:
           enabled: true
         alertmanager:
@@ -30,10 +36,10 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    #  추가된 부분 1: CRD 용량 초과 에러 방지를 위한 서버 사이드 어플라이
+    # CRD 용량 초과 에러 방지를 위한 서버 사이드 어플라이
     syncOptions:
     - ServerSideApply=true
-    # 추가된 부분 2: 덩치가 큰 모니터링 스택의 안정적인 배포를 위한 자동 재시도
+    # 덩치가 큰 모니터링 스택의 안정적인 배포를 위한 자동 재시도
     retry:
       limit: 5 # 최대 5회까지 재시도
       backoff:

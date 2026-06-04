@@ -1,0 +1,4 @@
+global:
+  gitlabUrl: "http://192.168.72.131"
+  edgeApiUrl: "https://<엣지-2-EKS-API-주소-입력>" # 👈 수정 필요
+  hubPrometheusUrl: "http://<허브-프로메테우스-주소-또는-Ingress>:9090/api/v1/write" # 👈 수정 필요

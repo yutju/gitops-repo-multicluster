@@ -35,7 +35,7 @@ fi
 # Step 4: 파드 가동 대기 (타이밍 오류 방지를 위해 5초 대기 추가)
 echo "[4/5] ArgoCD 서버가 켜질 때까지 자동 대기 중 (최대 5분)..."
 echo "(API 서버 리소스 인식 대기 중... 5초 대기)"
-sleep 5 
+sleep 5
 
 # argocd-server 디플로이먼트가 사용 가능(Available) 상태가 될 때까지 멈춤
 kubectl wait --for=condition=available deployment/argocd-server -n argocd --timeout=300s
@@ -49,13 +49,14 @@ echo "ArgoCD 핵심 서버 기동 완료!"
 
 # Step 5: 프라이빗 인증키 및 앱 주문서 연동 (★멀티 레포 버전에 맞게 완벽 수정됨★)
 echo "[5/5] 프라이빗 GitLab 인증키 및 Application(App of Apps) 배포 주문서 등록 중..."
-SECRET_YAML="kubernetes/cicd/argocd/argocd-repo-creds.yaml"
+# 🌟 수정됨: .gitignore에 의해 필터링되도록 이름이 변경된 시크릿 파일을 바라봅니다.
+SECRET_YAML="kubernetes/cicd/argocd/argocd-repo-secret.yaml"
 APP_YAML="kubernetes/cicd/argocd/bootstrap.yaml"
 
 if [ -f "$SECRET_YAML" ] && [ -f "$APP_YAML" ]; then
     kubectl apply -f "$SECRET_YAML"
     kubectl apply -f "$APP_YAML"
-    
+
     echo "--------------------------------------------------"
     echo "완벽합니다! ArgoCD 부트스트랩 및 GitOps 연동 성공"
     echo "✔ 다음 명령어로 초기 비밀번호를 확인한 후 로그인하세요:"

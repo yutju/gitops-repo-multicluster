@@ -143,7 +143,7 @@ spec:
         persistence:
           enabled: true
           existingClaim: jenkins-pvc
-          storageClass: "local-path"
+          storageClass: "gp3"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: jenkins
